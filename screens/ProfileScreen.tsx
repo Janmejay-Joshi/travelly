@@ -6,7 +6,7 @@ import Colors from "../constants/Colors";
 import { MaterialIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 
-export default function TabOneScreen({
+export default function ProfileScreen({
   navigation,
 }: RootTabScreenProps<"TabOne">) {
   return (

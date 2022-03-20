@@ -17,7 +17,7 @@ export default function CustomLeftDrawer(props: any) {
         <TouchableOpacity
           style={styles.Container}
           onPress={() => {
-            navigation.navigate("TabOne");
+            navigation.navigate("Profile");
             navigation.dispatch(DrawerActions.closeDrawer);
           }}
         >
@@ -25,7 +25,7 @@ export default function CustomLeftDrawer(props: any) {
           <MaterialIcons size={31} name="chevron-right" />
         </TouchableOpacity>
         <View style={{marginTop: 10}}>
-          <CustomDrawerItem title="Home" name="map" location="TabTwo"/>
+          <CustomDrawerItem title="Home" name="map" location="Home"/>
           <CustomDrawerItem title="Your Rides" name="electric-rickshaw" location="Rides" />
           <CustomDrawerItem title="Payments" name="payments" location="Payments" />
         </View>

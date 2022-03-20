@@ -6,6 +6,7 @@ import { Text, View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
 import CustomTopHeader from "../navigation/CustomTopHeader";
+import CustomBottomSheet from "../components/CustomBottomSheet";
 
 import { useEffect, useState } from "react";
 import {
@@ -15,7 +16,7 @@ import {
   LocationAccuracy,
 } from "expo-location";
 
-export default function TabTwoScreen() {
+export default function HomeScreen() {
   const [location, setLocation] = useState<LocationObject | null>(null);
   const [errorMsg, setErrorMsg] = useState<string>("");
 
@@ -36,10 +37,6 @@ export default function TabTwoScreen() {
   }, []);
 
   console.log(location);
-  const LatLng = location?.coords && {
-    latitude: location?.coords.latitude,
-    longitude: location?.coords.longitude,
-  };
   return (
     <>
       <View style={styles.container}>
@@ -81,6 +78,7 @@ export default function TabTwoScreen() {
           </Marker>
         </CustomMapView>
       </View>
+      <CustomBottomSheet />
       <CustomTopHeader />
     </>
   );
