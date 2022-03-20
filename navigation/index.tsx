@@ -69,17 +69,15 @@ function RootNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
-        name="TabOne"
-        component={TabOneScreen}
-      />
-      <Stack.Screen
         name="TabTwo"
         component={TabTwoScreen}
         options={{
-          header: () => null,
-          presentation: "card",
           title: "Tab Two",
         }}
+      />
+      <Stack.Screen
+        name="TabOne"
+        component={TabOneScreen}
       />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
