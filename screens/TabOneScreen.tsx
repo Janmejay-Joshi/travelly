@@ -1,15 +1,57 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
+import { Text, View } from "../components/Themed";
+import { RootTabScreenProps } from "../types";
+import React from "react";
+import Colors from "../constants/Colors";
+import { MaterialIcons } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native";
 
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
-import { RootTabScreenProps } from '../types';
-
-export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
+export default function TabOneScreen({
+  navigation,
+}: RootTabScreenProps<"TabOne">) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabOneScreen.tsx" />
+      <View style={styles.contentContainer}>
+        <View style={styles.navigation}>
+          <TouchableOpacity
+            style={{ marginRight: 12 }}
+            onPress={() => {
+              navigation.goBack();
+            }}
+          >
+            <MaterialIcons size={31} name="arrow-back" />
+          </TouchableOpacity>
+          <Text style={styles.title}>{"Profile"}</Text>
+        </View>
+        <View style={styles.mainContent}>
+          <View style={styles.ProfilePic}></View>
+          <View style={styles.PersonalDetails}>
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginTop: 28,
+              }}
+            >
+              <Text
+                style={[styles.title, { fontWeight: "bold", fontSize: 16 }]}
+              >
+                {"Personal Details"}
+              </Text>
+              <Text
+                style={[
+                  styles.title,
+                  { fontSize: 14, color: Colors.baseColors.gray },
+                ]}
+              >
+                {"Edit"}
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
     </View>
   );
 }
@@ -17,16 +59,49 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 14,
+    backgroundColor: Colors.baseColors.pureWhite,
+  },
+  contentContainer: {
+    flex: 1,
+    alignItems: "center",
+    elevation: 7,
+    borderRadius: 8,
+    marginTop: 30,
+    backgroundColor: Colors.baseColors.white,
+    padding: 14,
+  },
+  navigation: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 18,
+    // fontFamily: "Inter",
+    fontStyle: "normal",
+    fontWeight: "500",
+    color: Colors.baseColors.black,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  mainContent: {
+    marginTop: 28,
+    flex: 1,
+    display: "flex",
+    width: "100%",
+  },
+  ProfilePic: {
+    backgroundColor: Colors.baseColors.gray,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  PersonalDetails: {
+    flex: 1,
+    display: "flex",
+    width: "100%",
   },
 });
