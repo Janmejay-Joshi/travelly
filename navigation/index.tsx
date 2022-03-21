@@ -23,6 +23,8 @@ import LinkingConfiguration from "./LinkingConfiguration";
 import CustomLeftDrawer from "./CustomLeftDrawer";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import SignInScreen from "../screens/AuthScreens/SignInScreen";
+import OTPScreen from "../screens/AuthScreens/OTPScreen";
 
 export default function Navigation({
   colorScheme,
@@ -68,14 +70,12 @@ function RootNavigator() {
   const colorScheme = useColorScheme();
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-      />
-      <Stack.Screen
-        name="Profile"
-        component={ProfileScreen}
-      />
+      <Stack.Group screenOptions={{}}>
+        <Stack.Screen name="OTP" component={OTPScreen} />
+        <Stack.Screen name="SignIn" component={SignInScreen} />
+      </Stack.Group>
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
