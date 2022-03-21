@@ -2,22 +2,62 @@ import { Pressable, StyleSheet, TouchableOpacity } from "react-native";
 import { Text, View } from "../components/Themed";
 import React, { useCallback, useMemo, useRef } from "react";
 import BottomSheet, {
+  BottomSheetFooter,
   BottomSheetTextInput,
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
 import Colors from "../constants/Colors";
+import Layout from "../constants/Layout";
 
 export default function CustomBottomSheet() {
-  // ref
   const bottomSheetRef = useRef<BottomSheet>(null);
-
-  // variables
   const snapPoints = useMemo(() => ["30%", "75%"], []);
 
-  // callbacks
+  const renderFooter = useCallback(
+    (props) => (
+      <BottomSheetFooter
+        {...props}
+        bottomInset={14}
+        style={styles.footerContainer}
+      >
+        <Pressable
+          style={[
+            styles.boxContainer,
+            {
+              backgroundColor: Colors.baseColors.primary,
+              paddingLeft: 0,
+              justifyContent: "center",
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 5,
+              },
+              shadowOpacity: 0.34,
+              shadowRadius: 6.27,
+
+              elevation: 10,
+            },
+          ]}
+        >
+          <Text
+            style={{
+              fontFamily: "Inter",
+              fontWeight: "600",
+              fontSize: 16,
+            }}
+          >
+            {"Book Now"}
+          </Text>
+        </Pressable>
+      </BottomSheetFooter>
+    ),
+    []
+  );
+
   const handleSheetChanges = useCallback((index: number) => {
     console.log("handleSheetChanges", index);
   }, []);
+
   return (
     <BottomSheet
       ref={bottomSheetRef}
@@ -25,6 +65,8 @@ export default function CustomBottomSheet() {
       snapPoints={snapPoints}
       onChange={handleSheetChanges}
       keyboardBehavior="extend"
+      keyboardBlurBehavior="restore"
+      footerComponent={renderFooter}
       style={{
         shadowColor: "#000",
         shadowOffset: {
@@ -84,35 +126,6 @@ export default function CustomBottomSheet() {
             },
           ]}
         />
-        <Pressable
-          style={[
-            styles.boxContainer,
-            {
-              backgroundColor: Colors.baseColors.primary,
-              paddingLeft: 0,
-              justifyContent: "center",
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 0,
-                height: 5,
-              },
-              shadowOpacity: 0.34,
-              shadowRadius: 6.27,
-
-              elevation: 10,
-            },
-          ]}
-        >
-          <Text
-            style={{
-              fontFamily: "Inter",
-              fontWeight: "600",
-              fontSize: 16,
-            }}
-          >
-            {"Book Now"}
-          </Text>
-        </Pressable>
       </BottomSheetView>
     </BottomSheet>
   );
@@ -128,5 +141,8 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 50,
     borderRadius: 8,
+  },
+  footerContainer: {
+    padding: 14,
   },
 });

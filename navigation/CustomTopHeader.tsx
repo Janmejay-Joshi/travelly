@@ -16,7 +16,7 @@ export default function CustomTopHeader() {
       style={{
         width: Layout.window.width,
         height: 60,
-        paddingHorizontal: 25,
+        paddingHorizontal: 18,
         display: "flex",
         position: "absolute",
         top: 0,
@@ -62,21 +62,19 @@ export default function CustomTopHeader() {
             width: 16,
             marginRight: 8,
             backgroundColor: Colors.baseColors.secondary,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent:'center'
-            }}
-        >
-        <View
-          style={{
-            height: 7,
-            borderRadius: 4,
-            width: 7,
-            backgroundColor: Colors.baseColors.pureWhite,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-        </View>
-
+          <View
+            style={{
+              height: 7,
+              borderRadius: 4,
+              width: 7,
+              backgroundColor: Colors.baseColors.pureWhite,
+            }}
+          ></View>
         </View>
         <Text
           style={{

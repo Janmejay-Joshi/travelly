@@ -44,11 +44,11 @@ const Drawer = createDrawerNavigator();
 function DrawerNavigator() {
   return (
     <Drawer.Navigator
-      initialRouteName="Home"
+      initialRouteName="MainDrawer"
       drawerContent={(props) => <CustomLeftDrawer {...props} />}
     >
       <Drawer.Screen
-        name="Home"
+        name="MainDrawer"
         component={RootNavigator}
         options={{
           headerShown: false,
