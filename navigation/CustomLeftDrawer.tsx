@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: 16,
     marginLeft: 8,
+    color: Colors.baseColors.white,
   },
 });
 

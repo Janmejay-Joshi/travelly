@@ -44,6 +44,7 @@ export default function CustomBottomSheet() {
               fontFamily: "Inter",
               fontWeight: "600",
               fontSize: 16,
+              color: Colors.baseColors.white
             }}
           >
             {"Book Now"}
