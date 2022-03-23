@@ -29,7 +29,7 @@ export default function CustomLeftDrawer(props: any) {
           <CustomDrawerItem
             title="Your Rides"
             name="electric-rickshaw"
-            location="Rides"
+            location="PrevRides"
           />
           <CustomDrawerItem
             title="Payments"

@@ -25,6 +25,8 @@ import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import SignInScreen from "../screens/AuthScreens/SignInScreen";
 import OTPScreen from "../screens/AuthScreens/OTPScreen";
+import PreviousRides from "../screens/RideScreens/PreviousRides";
+import PreviousRideDetails from "../screens/RideScreens/PreviousRideDetails";
 
 export default function Navigation({
   colorScheme,
@@ -75,6 +77,10 @@ function RootNavigator() {
       <Stack.Group screenOptions={{}}>
         <Stack.Screen name="OTP" component={OTPScreen} />
         <Stack.Screen name="SignIn" component={SignInScreen} />
+      </Stack.Group>
+      <Stack.Group screenOptions={{}}>
+        <Stack.Screen name="PrevRides" component={PreviousRides} />
+        <Stack.Screen name="PrevRideDetails" component={PreviousRideDetails} />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
