@@ -79,6 +79,7 @@ export default function SignInScreen({
             }}
             placeholder="Mobile number"
             keyboardType="number-pad"
+            autoCompleteType="tel"
             textContentType="telephoneNumber"
           />
         </View>

@@ -2,7 +2,7 @@ import MapView, { MapViewProps } from "react-native-maps";
 import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
 
-import { useEffect, useState } from "react";
+import { useRef,useEffect, useState, forwardRef, ForwardedRef, LegacyRef } from "react";
 import {
   requestForegroundPermissionsAsync,
   getCurrentPositionAsync,
@@ -10,9 +10,10 @@ import {
   LocationAccuracy,
 } from "expo-location";
 
-export function CustomMapView(props: MapViewProps) {
+export const CustomMapView= forwardRef((props:MapViewProps, ref:LegacyRef<MapView>) => {
   const [location, setLocation] = useState<LocationObject | null>(null);
   const [errorMsg, setErrorMsg] = useState<string>("");
+  const mapRef = useRef()
 
   useEffect(() => {
     (async () => {
@@ -41,6 +42,7 @@ export function CustomMapView(props: MapViewProps) {
   return (
     <MapView
       {...props}
+      ref={ref}
       initialRegion={initialRegion}
       style={[
         {
@@ -54,4 +56,4 @@ export function CustomMapView(props: MapViewProps) {
       {props.children}
     </MapView>
   );
-}
+})

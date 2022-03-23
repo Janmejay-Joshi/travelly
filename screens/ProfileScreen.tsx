@@ -49,6 +49,44 @@ export default function ProfileScreen({
                 {"Edit"}
               </Text>
             </View>
+            <View
+              style={{
+                backgroundColor: Colors.baseColors.pureWhite,
+                width: "100%",
+                borderRadius: 8,
+                padding: 5,
+                marginTop: 14,
+              }}
+            >
+              <View style={styles.DetailsContainer}>
+                <MaterialIcons
+                  name="person"
+                  size={20}
+                  color={Colors.baseColors.secondary}
+                />
+                <Text style={styles.DetailsText}>{"Saket Khare"}</Text>
+              </View>
+              <View style={styles.seperator} />
+              <View style={styles.DetailsContainer}>
+                <MaterialIcons
+                  name="phone"
+                  size={20}
+                  color={Colors.baseColors.secondary}
+                />
+                <Text style={styles.DetailsText}>{"+91 6265779089"}</Text>
+              </View>
+              <View style={styles.seperator} />
+              <View style={styles.DetailsContainer}>
+                <MaterialIcons
+                  name="home-filled"
+                  size={20}
+                  color={Colors.baseColors.secondary}
+                />
+                <Text style={styles.DetailsText}>
+                  {"B/29 Ayodhaya Puri, Kodaria"}
+                </Text>
+              </View>
+            </View>
           </View>
         </View>
       </View>
@@ -79,7 +117,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    // fontFamily: "Inter",
+    fontFamily: "Inter",
     fontStyle: "normal",
     fontWeight: "500",
     color: Colors.baseColors.black,
@@ -103,5 +141,26 @@ const styles = StyleSheet.create({
     flex: 1,
     display: "flex",
     width: "100%",
+  },
+  DetailsContainer: {
+    display: "flex",
+    width: "100%",
+    padding: 8,
+    backgroundColor: Colors.baseColors.pureWhite,
+    flexDirection: "row",
+  },
+  DetailsText: {
+    marginLeft: 8,
+    fontSize: 16,
+    fontFamily: "Inter",
+    fontStyle: "normal",
+    fontWeight: "500",
+    color: Colors.baseColors.black,
+  },
+  seperator: {
+    alignSelf: "center",
+    width: "90%",
+    height: 1,
+    backgroundColor: Colors.baseColors.muted,
   },
 });

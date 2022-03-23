@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { CustomMapView } from "../components/FillMapView";
 
@@ -8,17 +8,19 @@ import Layout from "../constants/Layout";
 import CustomTopHeader from "../navigation/CustomTopHeader";
 import CustomBottomSheet from "../components/CustomBottomSheet";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   requestForegroundPermissionsAsync,
   getCurrentPositionAsync,
   LocationObject,
   LocationAccuracy,
 } from "expo-location";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function HomeScreen() {
   const [location, setLocation] = useState<LocationObject | null>(null);
   const [errorMsg, setErrorMsg] = useState<string>("");
+  const mapRef = useRef()
 
   useEffect(() => {
     (async () => {
@@ -35,12 +37,21 @@ export default function HomeScreen() {
       setLocation(location);
     })();
   }, []);
+  
+  function repositonToCurrentLocation(){
+    mapRef.current.animateToRegion({
+        latitude: location?.coords.latitude,
+        longitude: location?.coords.longitude,
+    latitudeDelta: 0.0042,
+    longitudeDelta: 0.0042,
+      }, 500)
 
-  console.log(location);
+    }
+
   return (
     <>
       <View style={styles.container}>
-        <CustomMapView style={{ position: "absolute", top: 0 }}>
+        <CustomMapView ref={mapRef} style={{ position: "absolute", top: 0 }} >
           <Marker
             coordinate={
               location?.coords.latitude && location?.coords.longitude
@@ -78,6 +89,21 @@ export default function HomeScreen() {
           </Marker>
         </CustomMapView>
       </View>
+        <Pressable style={{
+            position: 'relative',
+            bottom: '31.5%',
+            height: 42,
+            backgroundColor: Colors.baseColors.secondary,
+            width: 42,
+            borderRadius: 42,
+            left: Layout.window.width - 60,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          onPress={repositonToCurrentLocation}
+          >
+          <MaterialIcons name="my-location" color={Colors.baseColors.white} size={28} />
+        </Pressable>
       <CustomBottomSheet />
       <CustomTopHeader />
     </>
