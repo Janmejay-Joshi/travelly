@@ -1,14 +1,43 @@
 import { Pressable, StyleSheet, TextInput } from "react-native";
 import { Text, View } from "../../components/Themed";
 import { RootTabScreenProps } from "../../types";
-import React from "react";
+import React, { useState } from "react";
 import Colors from "../../constants/Colors";
 import { MaterialIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 
+import {
+  ApplicationVerifier,
+  PhoneAuthProvider,
+  PhoneInfoOptions,
+  signInWithCredential,
+} from "firebase/auth";
+import { auth } from "../../firebase";
+
 export default function OTPScreen({
+  route,
   navigation,
 }: RootTabScreenProps<"TabOne">) {
+  const verificationId = route.params?.verificationId;
+  const [verificationCode, setVerificationCode] = useState<string>("");
+
+  const verifyOTP = async () => {
+    try {
+      const credential = PhoneAuthProvider.credential(
+        verificationId,
+        verificationCode
+      );
+      await signInWithCredential(auth, credential);
+
+      console.log({
+        text: "Phone authentication successful 👍",
+      });
+      navigation.navigate("Home");
+    } catch (err) {
+      console.log({ text: `Error: ${err.message}`, color: "red" });
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.navigation}>
@@ -71,6 +100,9 @@ export default function OTPScreen({
             placeholder="OTP"
             keyboardType="numeric"
             textContentType="oneTimeCode"
+            onChangeText={(verificationCode) => {
+              setVerificationCode(verificationCode);
+            }}
           />
         </View>
       </View>
@@ -100,9 +132,7 @@ export default function OTPScreen({
 
             elevation: 6,
           }}
-          onPress={() => {
-            navigation.navigate("OTP");
-          }}
+          onPress={verifyOTP}
         >
           <Text
             style={{

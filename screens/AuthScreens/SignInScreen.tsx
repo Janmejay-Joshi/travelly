@@ -1,16 +1,54 @@
 import { Pressable, StyleSheet, TextInput } from "react-native";
 import { Text, View } from "../../components/Themed";
 import { RootTabScreenProps } from "../../types";
-import React from "react";
+import React, { useRef, useState } from "react";
 import Colors from "../../constants/Colors";
 import { MaterialIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
+import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
+import { auth, firebaseConfig } from "../../firebase";
+import {
+  ApplicationVerifier,
+  PhoneAuthProvider,
+  PhoneInfoOptions,
+} from "firebase/auth";
 
 export default function SignInScreen({
   navigation,
 }: RootTabScreenProps<"TabOne">) {
+  const recaptchaVerifier = useRef<any>();
+  const [phoneNumber, setPhoneNumber] = useState<string | PhoneInfoOptions>("");
+  const [verificationId, setVerificationId] = useState<string>();
+
+  async function sendOTP() {
+    // The FirebaseRecaptchaVerifierModal ref implements the
+    // FirebaseAuthApplicationVerifier interface and can be
+    // passed directly to `verifyPhoneNumber`.
+    try {
+      const phoneProvider = new PhoneAuthProvider(auth);
+      const verificationId = await phoneProvider.verifyPhoneNumber(
+        `+91${phoneNumber}`,
+        recaptchaVerifier.current
+      );
+      setVerificationId(verificationId);
+      console.log({
+        text: "Verification code has been sent to your phone.",
+      });
+      navigation.navigate<any>("OTP", {
+        verificationId,
+      });
+    } catch (err) {
+      console.log({ text: `Error: ${err.message}`, color: "red" });
+    }
+  }
+
   return (
     <View style={styles.container}>
+      <FirebaseRecaptchaVerifierModal
+        ref={recaptchaVerifier}
+        firebaseConfig={firebaseConfig}
+        // attemptInvisibleVerification={true}
+      />
       <View style={[styles.navigation, { height: 50 }]} />
       <View style={styles.mainContent}>
         <Text style={styles.title}>{"My Phone Number is :"}</Text>
@@ -81,6 +119,9 @@ export default function SignInScreen({
             keyboardType="number-pad"
             autoCompleteType="tel"
             textContentType="telephoneNumber"
+            onChangeText={(phoneNumber) => {
+              setPhoneNumber(phoneNumber);
+            }}
           />
         </View>
       </View>
@@ -111,7 +152,7 @@ export default function SignInScreen({
             elevation: 6,
           }}
           onPress={() => {
-            navigation.navigate("OTP");
+            sendOTP();
           }}
         >
           <Text
