@@ -116,6 +116,7 @@ export default function CustomBottomSheet() {
         </BottomSheetView>
         <BottomSheetTextInput
           placeholder="Search for a destination"
+          placeholderTextColor={Colors.baseColors.gray}
           style={[
             styles.boxContainer,
             {

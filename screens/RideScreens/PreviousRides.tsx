@@ -31,8 +31,9 @@ export default function PreviousRides({
               return (
                 <Pressable
                   onPress={() => navigation.navigate("PrevRideDetails")}
+                  key={index}
                 >
-                  <PreviousRideCard key={index} />
+                  <PreviousRideCard  />
                 </Pressable>
               );
             })}

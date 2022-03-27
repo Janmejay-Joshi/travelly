@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Image } from "react-native";
+import { StyleSheet, Image, Pressable } from "react-native";
 
 import { Text, View } from "../components/Themed";
 import Colors from "../constants/Colors";
@@ -8,8 +8,15 @@ import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
 
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+
 export default function CustomLeftDrawer(props: any) {
   const navigation = useNavigation();
+
+  function logout() {
+    signOut(auth);
+  }
   return (
     <View style={styles.Drawer}>
       <View style={{ flex: 1 }}>
@@ -39,11 +46,15 @@ export default function CustomLeftDrawer(props: any) {
         </View>
       </View>
       <View style={{ height: "24%", display: "flex", paddingBottom: 30 }}>
-        <View
+        <Pressable
           style={[
             styles.BottomButton,
             { backgroundColor: Colors.baseColors.primary },
           ]}
+          onPress={() => {
+            logout();
+            navigation.navigate("SignIn")
+          }}
         >
           <MaterialIcons
             size={20}
@@ -52,7 +63,7 @@ export default function CustomLeftDrawer(props: any) {
             name="logout"
           />
           <Text style={styles.BottomButtonText}>{"Logout"}</Text>
-        </View>
+        </Pressable>
 
         <View
           style={[

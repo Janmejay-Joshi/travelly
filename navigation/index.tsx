@@ -72,12 +72,12 @@ function RootNavigator() {
   const colorScheme = useColorScheme();
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Group screenOptions={{}}>
+        <Stack.Screen name="SignIn" component={SignInScreen} />
+        <Stack.Screen name="OTP" component={OTPScreen} />
+      </Stack.Group>
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Profile" component={ProfileScreen} />
-      <Stack.Group screenOptions={{}}>
-        <Stack.Screen name="OTP" component={OTPScreen} />
-        <Stack.Screen name="SignIn" component={SignInScreen} />
-      </Stack.Group>
       <Stack.Group screenOptions={{}}>
         <Stack.Screen name="PrevRides" component={PreviousRides} />
         <Stack.Screen name="PrevRideDetails" component={PreviousRideDetails} />
