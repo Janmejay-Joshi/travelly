@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import { Marker } from "react-native-maps";
 import { CustomMapView } from "../components/FillMapView";
 
 import { Text, View } from "../components/Themed";
@@ -14,13 +14,33 @@ import {
   getCurrentPositionAsync,
   LocationObject,
   LocationAccuracy,
+  geocodeAsync,
 } from "expo-location";
 import { MaterialIcons } from "@expo/vector-icons";
 
+interface LatLngDelta {
+  latitude: number;
+  longitude: number;
+  latitudeDelta: number;
+  longitudeDelta: number;
+}
+
 export default function HomeScreen() {
-  const [location, setLocation] = useState<LocationObject | null>(null);
+  const [location, setLocation] = useState<LatLngDelta>({
+    latitude: 0,
+    longitude: 0,
+    latitudeDelta: 0.0042,
+    longitudeDelta: 0.0042,
+  });
+
   const [errorMsg, setErrorMsg] = useState<string>("");
-  const mapRef = useRef()
+  const mapRef = useRef();
+
+  const getDataFromSheet = (location: LatLngDelta) => {
+    console.log('""da"');
+    console.log(location);
+    setLocation(location);
+  };
 
   useEffect(() => {
     (async () => {
@@ -34,36 +54,29 @@ export default function HomeScreen() {
       let location = await getCurrentPositionAsync({
         accuracy: LocationAccuracy.High,
       });
-      setLocation(location);
-    })();
-  }, []);
-  
-  function repositonToCurrentLocation(){
-    mapRef.current.animateToRegion({
+      setLocation({
         latitude: location?.coords.latitude,
         longitude: location?.coords.longitude,
-    latitudeDelta: 0.0042,
-    longitudeDelta: 0.0042,
-      }, 500)
+        latitudeDelta: 0.0042,
+        longitudeDelta: 0.0042,
+      });
+    })();
+  }, []);
 
-    }
+  function repositonToLocation() {
+    console.log(location);
+    mapRef.current.animateToRegion(location, 500);
+  }
 
   return (
     <>
       <View style={styles.container}>
-        <CustomMapView ref={mapRef} style={{ position: "absolute", top: 0 }} >
+        <CustomMapView ref={mapRef} style={{ position: "absolute", top: 0 }}>
           <Marker
-            coordinate={
-              location?.coords.latitude && location?.coords.longitude
-                ? {
-                    latitude: location?.coords.latitude,
-                    longitude: location?.coords.longitude,
-                  }
-                : {
-                    latitude: 0,
-                    longitude: 0,
-                  }
-            }
+            coordinate={{
+              latitude: location.latitude,
+              longitude: location.longitude,
+            }}
           >
             <View
               style={{
@@ -89,22 +102,27 @@ export default function HomeScreen() {
           </Marker>
         </CustomMapView>
       </View>
-        <Pressable style={{
-            position: 'relative',
-            bottom: '31.5%',
-            height: 42,
-            backgroundColor: Colors.baseColors.secondary,
-            width: 42,
-            borderRadius: 42,
-            left: Layout.window.width - 60,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-          onPress={repositonToCurrentLocation}
-          >
-          <MaterialIcons name="my-location" color={Colors.baseColors.white} size={28} />
-        </Pressable>
-      <CustomBottomSheet />
+      <Pressable
+        style={{
+          position: "relative",
+          bottom: "31.5%",
+          height: 42,
+          backgroundColor: Colors.baseColors.secondary,
+          width: 42,
+          borderRadius: 42,
+          left: Layout.window.width - 60,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+        onPress={repositonToLocation}
+      >
+        <MaterialIcons
+          name="my-location"
+          color={Colors.baseColors.white}
+          size={28}
+        />
+      </Pressable>
+      <CustomBottomSheet setLocation={getDataFromSheet} />
       <CustomTopHeader />
     </>
   );

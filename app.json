@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "transit-connect-native",
-    "slug": "transit-connect-native",
+    "name": "Travelly",
+    "slug": "travelly",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -19,13 +19,17 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.TypeSafeDevs.Travelly",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.TypeSafeDevs.Travelly",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

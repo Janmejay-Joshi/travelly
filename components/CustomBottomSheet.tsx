@@ -1,17 +1,47 @@
-import { Pressable, StyleSheet, TouchableOpacity } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 import { Text, View } from "../components/Themed";
-import React, { useCallback, useMemo, useRef } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import BottomSheet, {
   BottomSheetFooter,
   BottomSheetTextInput,
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
 import Colors from "../constants/Colors";
-import Layout from "../constants/Layout";
+import { getSearchLocation } from "../firebase/MapFunctions";
 
-export default function CustomBottomSheet() {
+interface LatLngDelta {
+  latitude: number;
+  longitude: number;
+  latitudeDelta: number;
+  longitudeDelta: number;
+}
+
+export default function CustomBottomSheet(getDataFromSheet: any) {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ["30%", "75%"], []);
+  const [searchLocation, setSearchLocation] = useState<string>("");
+
+  const handleSubmit = async () => {
+    if (searchLocation != "") {
+      const data = await getSearchLocation(searchLocation);
+      console.log(data);
+      getDataFromSheet({
+        latitude: data[0].latitude,
+        longitude: data[0].longitude,
+        latitudeDelta: 0.0042,
+        longitudeDelta: 0.0042,
+      });
+      return data;
+    }
+    console.log(3);
+  };
 
   const renderFooter = useCallback(
     (props) => (
@@ -38,13 +68,14 @@ export default function CustomBottomSheet() {
               elevation: 10,
             },
           ]}
+          onPress={handleSubmit}
         >
           <Text
             style={{
               fontFamily: "Inter",
               fontWeight: "600",
               fontSize: 16,
-              color: Colors.baseColors.white
+              color: Colors.baseColors.white,
             }}
           >
             {"Book Now"}
@@ -55,16 +86,11 @@ export default function CustomBottomSheet() {
     []
   );
 
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log("handleSheetChanges", index);
-  }, []);
-
   return (
     <BottomSheet
       ref={bottomSheetRef}
       index={0}
       snapPoints={snapPoints}
-      onChange={handleSheetChanges}
       keyboardBehavior="extend"
       keyboardBlurBehavior="restore"
       footerComponent={renderFooter}
@@ -127,6 +153,9 @@ export default function CustomBottomSheet() {
               color: Colors.baseColors.gray,
             },
           ]}
+          onChangeText={(locationInput) => {
+            setSearchLocation(locationInput);
+          }}
         />
       </BottomSheetView>
     </BottomSheet>

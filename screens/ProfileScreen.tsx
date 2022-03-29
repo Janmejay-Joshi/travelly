@@ -5,10 +5,13 @@ import React from "react";
 import Colors from "../constants/Colors";
 import { MaterialIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
+import { getUserInfo } from "../firebase/UserFunctions";
 
 export default function ProfileScreen({
   navigation,
 }: RootTabScreenProps<"TabOne">) {
+  const data = getUserInfo("916265779089");
+  console.log(data);
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
